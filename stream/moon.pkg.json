@@ -1,0 +1,48 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "moonbitlang/core/encoding/utf8",
+      "alias": "utf8"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/core/bench",
+      "alias": "bench"
+    }
+  ],
+  "native-stub": [
+    "file_reader_stub.c"
+  ],
+  "targets": {
+    "file_byte_stream.mbt": [
+      "native"
+    ],
+    "file_byte_stream_test.mbt": [
+      "native"
+    ],
+    "file_dest.mbt": [
+      "native"
+    ],
+    "file_dest_test.mbt": [
+      "native"
+    ],
+    "file_dest_wbtest.mbt": [
+      "native"
+    ],
+    "file_metadata.mbt": [
+      "native"
+    ],
+    "file_metadata_test.mbt": [
+      "native"
+    ],
+    "file_stream_bench_test.mbt": [
+      "native"
+    ]
+  }
+}

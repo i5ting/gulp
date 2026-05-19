@@ -1,0 +1,27 @@
+///|
+import {
+  "moonbitlang/core/env" @env
+}
+
+///|
+fn selected_task(args : Array[String]) -> String {
+  if args.length() >= 3 && args[1] == "--watch" {
+    args[2]
+  } else if args.length() >= 2 {
+    args[1]
+  } else {
+    "app"
+  }
+}
+
+///|
+fn main {
+  let args = @env.args()
+  if args.length() >= 2 && args[1] == "--tasks" {
+    println("app\nbuild")
+  } else if args.length() >= 2 && args[1] == "--tree" {
+    println("root\n  app\n  build")
+  } else {
+    println("mulp fixture: " + selected_task(args))
+  }
+}

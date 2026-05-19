@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/user/workspace/github/gulp/mulp/stream/_build/native/debug/test/libruntime.dylib'
+relocations:     []
+...

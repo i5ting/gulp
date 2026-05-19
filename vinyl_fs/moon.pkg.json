@@ -1,0 +1,76 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/platform",
+      "alias": "platform"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "mulpjs/mulp/vinyl",
+      "alias": "vinyl"
+    },
+    {
+      "path": "moonbitlang/core/encoding/utf8",
+      "alias": "utf8"
+    }
+  ],
+  "native-stub": [
+    "vinyl_fs_stub.c"
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/core/bench",
+      "alias": "bench"
+    },
+    {
+      "path": "mulpjs/mulp/through2",
+      "alias": "through2"
+    }
+  ],
+  "targets": {
+    "src.mbt": [
+      "native"
+    ],
+    "dest.mbt": [
+      "native"
+    ],
+    "src_test.mbt": [
+      "native"
+    ],
+    "dest_test.mbt": [
+      "native"
+    ],
+    "file_operations.mbt": [
+      "native"
+    ],
+    "file_operations_test.mbt": [
+      "native"
+    ],
+    "glob_stream.mbt": [
+      "native"
+    ],
+    "glob_stream_test.mbt": [
+      "native"
+    ],
+    "symlink_test.mbt": [
+      "native"
+    ],
+    "gulp_recipe_test.mbt": [
+      "native"
+    ],
+    "vinyl_fs_bench_test.mbt": [
+      "native"
+    ],
+    "codecs_test.mbt": [
+      "native"
+    ]
+  }
+}

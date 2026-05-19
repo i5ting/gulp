@@ -1,0 +1,32 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/core/bench",
+      "alias": "bench"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    }
+  ],
+  "targets": {
+    "file_bench_test.mbt": [
+      "native"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/async",
+      "alias": "async"
+    }
+  ],
+  "targets": {
+    "task_ref.mbt": [
+      "native"
+    ],
+    "undertaker.mbt": [
+      "native"
+    ],
+    "tree.mbt": [
+      "native"
+    ],
+    "last_run.mbt": [
+      "native"
+    ],
+    "undertaker_test.mbt": [
+      "native"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "is-main": true,
+  "supported-targets": "native",
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "mulpjs/mulp/vinyl",
+      "alias": "vinyl"
+    },
+    {
+      "path": "mulpjs/mulp/vinyl_fs",
+      "alias": "vinyl_fs"
+    },
+    {
+      "path": "moonbitlang/core/bench",
+      "alias": "bench"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    },
+    {
+      "path": "moonbitlang/core/encoding/utf8",
+      "alias": "utf8"
+    }
+  ]
+}

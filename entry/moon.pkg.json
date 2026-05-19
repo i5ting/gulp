@@ -1,0 +1,45 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "i5ting/glob-watcher",
+      "alias": "glob_watcher"
+    },
+    {
+      "path": "i5ting/chokidar",
+      "alias": "chokidar"
+    },
+    {
+      "path": "moonbitlang/async",
+      "alias": "async"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/async",
+      "alias": "async"
+    }
+  ],
+  "targets": {
+    "async_register.mbt": [
+      "native"
+    ],
+    "register_test.mbt": [
+      "native"
+    ],
+    "watch.mbt": [
+      "native"
+    ],
+    "watch_test.mbt": [
+      "native"
+    ]
+  }
+}

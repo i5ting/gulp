@@ -1,0 +1,55 @@
+{
+  "is-main": true,
+  "supported-targets": "native",
+  "import": [
+    {
+      "path": "mulpjs/mulp/cli",
+      "alias": "cli"
+    },
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "mulpjs/mulp/platform",
+      "alias": "platform"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    },
+    {
+      "path": "moonbitlang/core/encoding/utf8",
+      "alias": "utf8"
+    },
+    {
+      "path": "i5ting/glob-watcher",
+      "alias": "glob_watcher"
+    },
+    {
+      "path": "i5ting/chokidar",
+      "alias": "chokidar"
+    }
+  ],
+  "native-stub": [
+    "main_stub.c"
+  ],
+  "targets": {
+    "main.mbt": [
+      "native"
+    ],
+    "command_wbtest.mbt": [
+      "native"
+    ],
+    "real_config.mbt": [
+      "native"
+    ],
+    "watch_wbtest.mbt": [
+      "native"
+    ]
+  }
+}

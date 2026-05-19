@@ -1,0 +1,9 @@
+-I/Users/user/.moon/include
+-L/Users/user/.moon/lib
+-g
+-DMOONBIT_NATIVE_NO_SYS_HEADER
+-fPIC
+-DMOONBIT_USE_SHARED_RUNTIME
+/Users/user/workspace/github/gulp/mulp/cmd/mulp/fixtures/workspace/app/_build/native/debug/build/libruntime.dylib
+-run
+/Users/user/workspace/github/gulp/mulp/cmd/mulp/fixtures/workspace/app/_build/native/debug/build/single/single.c

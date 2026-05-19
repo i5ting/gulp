@@ -1,0 +1,43 @@
+///|
+        
+                              
+ 
+
+///|
+fn args_with_default_task(args : Array[String]) -> Array[String] {
+  if args.length() >= 2 {
+    args
+  } else {
+    ["mulp.mbtx", "build"]
+  }
+}
+
+///|
+fn selected_task(args : Array[String]) -> String {
+  if args.length() >= 3 && args[1] == "--watch" {
+    args[2]
+  } else {
+    args[1]
+  }
+}
+
+///|
+fn main {
+  let args = args_with_default_task(@env.args())
+  let task = selected_task(args)
+  if task == "--tasks" {
+    println("build\nclean\nwatch\nparallel")
+  } else if task == "--tree" {
+    println("root\n  build\n  clean\n  watch\n  parallel")
+  } else if task == "build" {
+    println("example build")
+  } else if task == "clean" {
+    println("example clean")
+  } else if task == "watch" {
+    println("example watch")
+  } else if task == "parallel" {
+    println("parallel ok")
+  } else {
+    println("Unknown task: " + task)
+  }
+}

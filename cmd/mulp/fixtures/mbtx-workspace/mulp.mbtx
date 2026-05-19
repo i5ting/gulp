@@ -1,0 +1,42 @@
+///|
+import {
+  "moonbitlang/core/env" @env,
+  "moonbitlang/core/encoding/utf8" @utf8
+}
+
+///|
+#borrow(buffer)
+extern "c" fn write_fd(fd : Int, buffer : Bytes, count : Int) -> Int = "write"
+
+///|
+extern "c" fn exit_process(status : Int) -> Unit = "exit"
+
+///|
+fn selected_task(args : Array[String]) -> String {
+  if args.length() >= 3 && args[1] == "--watch" {
+    args[2]
+  } else if args.length() >= 2 {
+    args[1]
+  } else {
+    "build"
+  }
+}
+
+///|
+fn main {
+  let args = @env.args()
+  if args.length() >= 2 && args[1] == "--tasks" {
+    println("build\nclean\nwatch")
+  } else if args.length() >= 2 && args[1] == "--tree" {
+    println("root\n  build\n  clean\n  watch")
+  } else {
+    let task = selected_task(args)
+    if task == "build" || task == "clean" || task == "watch" {
+      println("mulp mbtx fixture: " + task)
+    } else {
+      let message = @utf8.encode("Unknown task: " + task + "\n")
+      ignore(write_fd(2, message, message.length()))
+      exit_process(1)
+    }
+  }
+}

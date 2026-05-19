@@ -1,0 +1,31 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "moonbitlang/core/env",
+      "alias": "env"
+    }
+  ],
+  "native-stub": [
+    "process_stub.c",
+    "signal_stub.c"
+  ],
+  "targets": {
+    "process.mbt": [
+      "native"
+    ],
+    "process_test.mbt": [
+      "native"
+    ],
+    "signal.mbt": [
+      "native"
+    ],
+    "signal_wbtest.mbt": [
+      "native"
+    ]
+  }
+}

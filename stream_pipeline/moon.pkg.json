@@ -1,0 +1,19 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "mulpjs/mulp/through2",
+      "alias": "through2"
+    }
+  ]
+}

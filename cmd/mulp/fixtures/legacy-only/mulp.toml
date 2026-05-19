@@ -1,0 +1,6 @@
+[package]
+name = "legacy-build"
+
+[mulp]
+entry = "legacy/build"
+default = "legacy"

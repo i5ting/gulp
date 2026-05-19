@@ -1,0 +1,32 @@
+///|
+pub fn through2_parity_report() -> String {
+  [
+    "implemented: classicByteTransform -> stateful transform_bytes map",
+    "implemented: classicNoopTransform -> transform_bytes passthrough",
+    "implemented: classicFlush -> transform_bytes with flush",
+    "covered-by-typed-api: classicCallbackShorthand -> Result Ok(Some(chunk))",
+    "implemented: asyncReturnedValuePushed -> transform_bytes map",
+    "implemented: asyncUndefinedSkipsEmission -> None filter",
+    "implemented: asyncRejectedPropagatesError -> Result error propagation",
+    "implemented: asyncgenOneToOne -> flatMap returning one element",
+    "implemented: asyncgenFanOut -> flatMap returning many elements",
+    "implemented: asyncgenFilter -> flatMap returning zero or one element",
+    "implemented: asyncgenWithClassicFlush -> flatMap with flush",
+    "implemented: asyncgenThrownPropagates -> flatMap Result error",
+    "implemented: objectTransformPassthrough -> object_transform_files/object_transform_vinyl",
+    "covered-by-typed-api: objectTransformFromReadable -> FileStream/VinylFileStream source pipe",
+    "implemented: transformerReusableFactory -> ctor_bytes/ctor_files/ctor_vinyl",
+    "not-applicable-native-v1: transformerOptionsMerge -> no Node TransformOptions object",
+    "not-applicable-native-v1: transformerOverrideOptions -> no Node TransformOptions object",
+    "not-applicable-native-v1: transformerAsyncSupported -> no JS async function runtime",
+    "not-applicable-native-v1: legacyDefault -> no JS default export",
+    "covered-by-typed-api: legacyDefaultObj -> use object_transform_files/object_transform_vinyl",
+    "covered-by-typed-api: legacyDefaultCtor -> use ctor_files/ctor_vinyl",
+    "not-applicable-native-v1: transformerAsyncgenSupported -> no JS async generator runtime",
+    "covered-by-typed-api: asyncgenDownstreamBackpressure -> pull stream reads on demand",
+    "covered-by-typed-api: asyncgenWritableBackpressure -> pull stream reads on demand",
+    "covered-by-typed-api: asyncgenDestroyMidStream -> close propagates upstream",
+    "covered-by-typed-api: asyncgenDestroyRunsFinally -> close callback releases resources",
+    "not-applicable-native-v1: through2/web -> no WHATWG Web Streams package",
+  ].join("\n")
+}

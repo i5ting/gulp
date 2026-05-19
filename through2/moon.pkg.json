@@ -1,0 +1,44 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "mulpjs/mulp/vinyl",
+      "alias": "vinyl"
+    },
+    {
+      "path": "mulpjs/mulp/vinyl_fs",
+      "alias": "vinyl_fs"
+    }
+  ],
+  "test-import": [
+    {
+      "path": "moonbitlang/core/encoding/utf8",
+      "alias": "utf8"
+    }
+  ],
+  "targets": {
+    "byte_test.mbt": [
+      "native"
+    ],
+    "file_test.mbt": [
+      "native"
+    ],
+    "vinyl_test.mbt": [
+      "native"
+    ],
+    "parity_test.mbt": [
+      "native"
+    ],
+    "facade_test.mbt": [
+      "native"
+    ]
+  }
+}

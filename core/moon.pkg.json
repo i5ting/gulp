@@ -1,0 +1,17 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "moonbitlang/async",
+      "alias": "async"
+    }
+  ],
+  "targets": {
+    "async_task.mbt": [
+      "native"
+    ],
+    "async_task_test.mbt": [
+      "native"
+    ]
+  }
+}

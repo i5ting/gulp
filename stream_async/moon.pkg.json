@@ -1,0 +1,31 @@
+{
+  "is-main": false,
+  "import": [
+    {
+      "path": "mulpjs/mulp/core",
+      "alias": "core"
+    },
+    {
+      "path": "mulpjs/mulp/stream",
+      "alias": "stream"
+    },
+    {
+      "path": "moonbitlang/async",
+      "alias": "async"
+    }
+  ],
+  "targets": {
+    "async_task.mbt": [
+      "native"
+    ],
+    "async_task_test.mbt": [
+      "native"
+    ],
+    "worker_pool.mbt": [
+      "native"
+    ],
+    "worker_pool_test.mbt": [
+      "native"
+    ]
+  }
+}
