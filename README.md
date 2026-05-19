@@ -48,35 +48,19 @@ Create a `gulp.mbtx` file at your project root:
 ```moonbit
 ///|
 import {
-  "moonbitlang/core/env" @env
+  "moonbitlang/core/env" @env,
+  "i5ting/gulp/entry" @entry,
 }
 
 ///|
-fn selected_task(args : Array[String]) -> String {
-  if args.length() >= 3 && args[1] == "--watch" {
-    args[2]
-  } else if args.length() >= 2 {
-    args[1]
-  } else {
-    "build"
-  }
+fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  println("building...")
+  Ok(())
 }
 
 ///|
 fn main {
-  let args = @env.args()
-  if args.length() >= 2 && args[1] == "--tasks" {
-    println("build\nclean\nwatch\nparallel")
-  } else if args.length() >= 2 && args[1] == "--tree" {
-    println("root\n  build\n  clean\n  watch\n  parallel")
-  } else {
-    let task = selected_task(args)
-    if task == "build" || task == "clean" || task == "watch" || task == "parallel" {
-      println("running " + task)
-    } else {
-      println("Unknown task: " + task)
-    }
-  }
+  @entry.run_tasks([("build", build)], @env.args(), default_task="build")
 }
 ```
 
@@ -412,22 +396,26 @@ that still need the legacy parser can pass an explicit path with `--config`,
 A minimal project keeps `gulp.mbtx` at the workspace root:
 
 ```moonbit
+///|
 import {
-  "moonbitlang/core/env" @env
+  "moonbitlang/core/env" @env,
+  "i5ting/gulp/entry" @entry,
 }
 
+///|
+fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
+fn clean(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
+fn watch(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
+fn parallel_task(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
+
+///|
 fn main {
-  let args = @env.args()
-  let task = if args.length() >= 2 { args[1] } else { "build" }
-  if args.length() >= 2 && args[1] == "--tasks" {
-    println("build\nclean\nwatch\nparallel")
-  } else if args.length() >= 2 && args[1] == "--tree" {
-    println("root\n  build\n  clean\n  watch\n  parallel")
-  } else if task == "build" || task == "clean" || task == "watch" || task == "parallel" {
-    println(task)
-  } else {
-    println("Unknown task: " + task)
-  }
+  let registry = @entry.new_registry()
+  @entry.task(registry, "build", build)
+  @entry.task(registry, "clean", clean)
+  @entry.task(registry, "watch", watch)
+  @entry.task(registry, "parallel", parallel_task)
+  @entry.run(registry, @env.args(), default_task="build")
 }
 ```
 
@@ -491,28 +479,27 @@ exports.default = exports.build;
 ```
 
 ```moonbit
+///|
 import {
-  "moonbitlang/core/env" @env
+  "moonbitlang/core/env" @env,
+  "i5ting/gulp/entry" @entry,
 }
 
-fn selected_task(args : Array[String]) -> String {
-  if args.length() >= 2 { args[1] } else { "build" }
-}
+///|
+fn clean(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
+fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
 
+///|
 fn main {
-  let task = selected_task(@env.args())
-  if task == "clean" {
-    println("clean")
-  } else if task == "build" {
-    println("build")
-  } else {
-    println("Unknown task: " + task)
-  }
+  let registry = @entry.new_registry()
+  @entry.task(registry, "clean", clean)
+  @entry.task(registry, "build", build)
+  @entry.run(registry, @env.args(), default_task="build")
 }
 ```
 
-Replace `gulp --tasks` / `gulp --tree` support with explicit `--tasks` and
-`--tree` branches in `gulp.mbtx`, as shown in the quick start. Replace
+`@entry.run` handles `--tasks`, `--tree`, `--tasks-json`, and task dispatch
+automatically — no hand-written argument dispatcher is needed. Replace
 `gulpfile.js`, `gulpfile.mjs`, and transpiled gulpfiles with `gulp.mbtx`; the
 CLI passes task arguments to `moon run --target native <gulp.mbtx> -- <args>`.
 `gulp --tasks-simple` is accepted as a gulp-compatible alias and is normalized

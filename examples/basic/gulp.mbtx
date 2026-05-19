@@ -1,0 +1,43 @@
+///|
+import {
+  "moonbitlang/core/env" @env,
+  "i5ting/gulp/entry" @entry,
+}
+
+///|
+fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  println("example build")
+  Ok(())
+}
+
+///|
+fn clean(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  println("example clean")
+  Ok(())
+}
+
+///|
+fn watch(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  println("example watch")
+  Ok(())
+}
+
+///|
+fn parallel_task(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  println("parallel ok")
+  Ok(())
+}
+
+///|
+fn main {
+  @entry.run_tasks(
+    [
+      ("build", build),
+      ("clean", clean),
+      ("watch", watch),
+      ("parallel", parallel_task),
+    ],
+    @env.args(),
+    default_task="build",
+  )
+}

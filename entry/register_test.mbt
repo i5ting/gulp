@@ -303,6 +303,48 @@ test "parallel_by_name returns error for unknown task name" {
 }
 
 ///|
+test "run executes the named task from args" {
+  let trace : Array[String] = []
+  let registry = new_registry()
+  ignore(task(registry, "build", fn(_ctx) {
+    trace.push("build")
+    Ok(())
+  }))
+  run(registry, ["entry", "build"])
+  inspect(trace, content="[\"build\"]")
+}
+
+///|
+test "run uses default_task when no task arg is provided" {
+  let trace : Array[String] = []
+  let registry = new_registry()
+  ignore(task(registry, "copy", fn(_ctx) {
+    trace.push("copy")
+    Ok(())
+  }))
+  run(registry, ["entry"], default_task="copy")
+  inspect(trace, content="[\"copy\"]")
+}
+
+///|
+test "run does not execute any task for --tasks" {
+  let trace : Array[String] = []
+  let registry = new_registry()
+  ignore(task(registry, "build", fn(_ctx) {
+    trace.push("build")
+    Ok(())
+  }))
+  run(registry, ["entry", "--tasks"])
+  inspect(trace, content="[]")
+}
+
+///|
+test "run does not panic for an unknown task name" {
+  let registry = new_registry()
+  run(registry, ["entry", "does-not-exist"])
+}
+
+///|
 test "last_run returns None before task executes" {
   let registry = new_registry()
   let t = task(registry, "clean", ok_task)
@@ -343,4 +385,36 @@ async test "last_run_async returns Some(now_ms) after async task executes" {
   )
   ignore(t.execute(ctx))
   inspect(last_run_async(t) is Some(9500L), content="true")
+}
+
+///|
+test "run_tasks registers and runs a named task" {
+  let trace : Array[String] = []
+  run_tasks(
+    [
+      ("build", fn(_ctx) { trace.push("build"); Ok(()) }),
+      ("clean", fn(_ctx) { trace.push("clean"); Ok(()) }),
+    ],
+    ["entry", "build"],
+  )
+  inspect(trace, content="[\"build\"]")
+}
+
+///|
+test "run_tasks uses default_task when no arg is provided" {
+  let trace : Array[String] = []
+  run_tasks(
+    [("deploy", fn(_ctx) { trace.push("deploy"); Ok(()) })],
+    ["entry"],
+    default_task="deploy",
+  )
+  inspect(trace, content="[\"deploy\"]")
+}
+
+///|
+test "run_tasks renders task list for --tasks" {
+  let registry = new_registry()
+  ignore(task(registry, "a", ok_task))
+  ignore(task(registry, "b", ok_task))
+  inspect(render_args(registry, ["entry", "--tasks"]).unwrap(), content="a\nb")
 }
