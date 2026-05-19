@@ -2,17 +2,17 @@
   "is-main": false,
   "import": [
     {
-      "path": "mulpjs/mulp/core",
+      "path": "i5ting/gulp/core",
       "alias": "core"
     },
     {
-      "path": "mulpjs/mulp/stream",
+      "path": "i5ting/gulp/stream",
       "alias": "stream"
     }
   ],
   "test-import": [
     {
-      "path": "mulpjs/mulp/through2",
+      "path": "i5ting/gulp/through2",
       "alias": "through2"
     }
   ]

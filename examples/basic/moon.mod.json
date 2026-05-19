@@ -2,7 +2,7 @@
   "name": "mulpjs/basic-example",
   "version": "0.1.0",
   "deps": {
-    "mulpjs/mulp": {
+    "i5ting/gulp": {
       "path": "../.."
     }
   }

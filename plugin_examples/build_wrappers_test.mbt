@@ -1,8 +1,8 @@
 ///|
 test "plugin examples build moonbit build wrapper commands" {
-  let command = moonbit_build_wrapper(target="native", package_name="mulpjs/mulp")
+  let command = moonbit_build_wrapper(target="native", package_name="i5ting/gulp")
   inspect(command.program(), content="moon")
-  inspect(command.args(), content="[\"build\", \"--target\", \"native\", \"mulpjs/mulp\"]")
+  inspect(command.args(), content="[\"build\", \"--target\", \"native\", \"i5ting/gulp\"]")
 }
 
 ///|

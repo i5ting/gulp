@@ -2,19 +2,19 @@
   "is-main": false,
   "import": [
     {
-      "path": "mulpjs/mulp/core",
+      "path": "i5ting/gulp/core",
       "alias": "core"
     },
     {
-      "path": "mulpjs/mulp/platform",
+      "path": "i5ting/gulp/platform",
       "alias": "platform"
     },
     {
-      "path": "mulpjs/mulp/stream",
+      "path": "i5ting/gulp/stream",
       "alias": "stream"
     },
     {
-      "path": "mulpjs/mulp/vinyl",
+      "path": "i5ting/gulp/vinyl",
       "alias": "vinyl"
     },
     {
@@ -31,7 +31,7 @@
       "alias": "bench"
     },
     {
-      "path": "mulpjs/mulp/through2",
+      "path": "i5ting/gulp/through2",
       "alias": "through2"
     }
   ],

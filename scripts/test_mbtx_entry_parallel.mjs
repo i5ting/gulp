@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDir, '..');
 const version = '0.1.0';
-const moduleName = 'mulpjs/mulp';
+const moduleName = 'i5ting/gulp';
 const packageName = `mulpjs-mulp-${version}.zip`;
 
 function run(command, args, options = {}) {
@@ -90,8 +90,8 @@ fs.writeFileSync(
 import {
   "moonbitlang/core/env" @env,
   "moonbitlang/async@0.19.0" @async,
-  "mulpjs/mulp@${version}/core" @core,
-  "mulpjs/mulp@${version}/entry" @entry,
+  "i5ting/gulp@${version}/core" @core,
+  "i5ting/gulp@${version}/entry" @entry,
 }
 
 ///|

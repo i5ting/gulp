@@ -1,0 +1,14 @@
+{
+  "name": "i5ting/chokidar",
+  "version": "0.1.0",
+  "deps": {
+    "i5ting/readdirp": "0.1.3",
+    "moonbitlang/regexp": "0.3.5"
+  },
+  "readme": "README.mbt.md",
+  "repository": "https://github.com/i5ting/chokidar",
+  "license": "Apache-2.0",
+  "keywords": ["file-watcher", "fsevents", "inotify", "kqueue", "native"],
+  "description": "Cross-platform file watching library for MoonBit native target. Port of chokidar v5 with kqueue (macOS/FreeBSD) and inotify (Linux) backends.",
+  "preferred-backend": "native"
+}

@@ -2,7 +2,7 @@
   "is-main": false,
   "import": [
     {
-      "path": "mulpjs/mulp/core",
+      "path": "i5ting/gulp/core",
       "alias": "core"
     }
   ],

@@ -1,49 +1,49 @@
-# mulp
+# gulp
 
-`mulp` is a MoonBit-native build tool inspired by gulp.
+`gulp` is a MoonBit-native build tool inspired by the Node.js gulp task runner.
 
 This repository slice currently contains:
 
-- `mulpjs/mulp/core`: task registration, task lookup, `series`, `parallel`, `lastRun`,
+- `i5ting/gulp/core`: task registration, task lookup, `series`, `parallel`, `lastRun`,
   and registry tree output
-- `mulpjs/mulp/stream`: byte streams, file streams, zero-to-many transforms, and
+- `i5ting/gulp/stream`: byte streams, file streams, zero-to-many transforms, and
   in-memory `src`/`dest`, plus native file-backed `ByteStream` and `file_dest`
   for files, empty files, directories, symlinks, filesystem metadata, and named
   stream plugins; context-aware file byte streams close native readers on
   cancellation
-- `mulpjs/mulp/vinyl`: a MoonBit Vinyl file model with contents, path history,
+- `i5ting/gulp/vinyl`: a MoonBit Vinyl file model with contents, path history,
   stat kind, symlink target, custom metadata, clone with replayable stream
   contents, base/cwd proxy behavior, and path-derived helpers
-- `mulpjs/mulp/through2`: typed MoonBit-native through2-style transforms for
+- `i5ting/gulp/through2`: typed MoonBit-native through2-style transforms for
   `ByteStream`, `FileStream`, and `VinylFileStream`, covering passthrough,
   map/filter/flatMap, flush, error propagation, and reusable factories
-- `mulpjs/mulp/cli`: pure config parsing, CLI argument selection, task list/tree
+- `i5ting/gulp/cli`: pure config parsing, CLI argument selection, task list/tree
   rendering, and `moon run` proxy command modeling
-- `mulpjs/mulp/entry`: the task-entry convention for user build packages
-- `mulpjs/mulp/platform`: in-memory filesystem behavior for platform-layer tests,
+- `i5ting/gulp/entry`: the task-entry convention for user build packages
+- `i5ting/gulp/platform`: in-memory filesystem behavior for platform-layer tests,
   including file reads/writes, directory creation, deletion, stat, path
   normalization, and native `moon run` process execution with stdout/stderr
   capture, clocks, signal polling, cancellation bridging, glob expansion, and
   lazy glob discovery, plus glob watch snapshots for added/removed path events
   and explicit macOS/Linux/Windows path behavior tests
-- `mulpjs/mulp/cmd/mulp`: native executable entry package with a minimal command
-  surface, real upward `mulp.mbtx` discovery, and explicit script path loading
+- `i5ting/gulp/cmd/gulp`: native executable entry package with a minimal command
+  surface, real upward `gulp.mbtx` discovery, and explicit script path loading
   that proxies default and explicit tasks into `moon run` commands
   and can list/render configured tasks with structured command status
-- `mulpjs/mulp/examples/basic`: a minimal `mulp.mbtx` task script
+- `i5ting/gulp/examples/basic`: a minimal `gulp.mbtx` task script
 
 Full filesystem-backed `src`, remaining CLI actions, watch mode, and broader OS
 backends have their own implementation slices.
 
 ## Current Usage
 
-This slice can be used from MoonBit package tests and the native `mulp`
-command package. The native command reads `mulp.mbtx` from the real filesystem
+This slice can be used from MoonBit package tests and the native `gulp`
+command package. The native command reads `gulp.mbtx` from the real filesystem
 and dispatches configured tasks through `moon run`.
 
 ### Quick Start
 
-Create a `mulp.mbtx` file at your project root:
+Create a `gulp.mbtx` file at your project root:
 
 ```moonbit
 ///|
@@ -83,27 +83,27 @@ fn main {
 Then run:
 
 ```bash
-mulp
-mulp build
-mulp --tasks
-mulp --tasks-simple
-mulp --tree build
-mulp --watch build
+gulp
+gulp build
+gulp --tasks
+gulp --tasks-simple
+gulp --tree build
+gulp --watch build
 ```
 
-`mulp` searches upward from the current directory for `mulp.mbtx`. You can also
+`gulp` searches upward from the current directory for `gulp.mbtx`. You can also
 point to a script explicitly:
 
 ```bash
-mulp --mulpfile path/to/mulp.mbtx build
-mulp --file path/to/mulp.mbtx --tasks
-mulp --gulpfile path/to/mulp.mbtx --tree build
+gulp --gulpfile path/to/gulp.mbtx build
+gulp --file path/to/gulp.mbtx --tasks
+gulp --gulpfile path/to/gulp.mbtx --tree build
 ```
 
 For local repository development, run the native command package directly:
 
 ```bash
-moon run cmd/mulp --target native -- --cwd examples/basic build
+moon run cmd/gulp --target native -- --cwd examples/basic build
 ```
 
 ### Native Release Smoke
@@ -111,23 +111,23 @@ moon run cmd/mulp --target native -- --cwd examples/basic build
 Build the native executable in release mode:
 
 ```bash
-cd mulp
-moon build cmd/mulp --release --target native
+cd gulp
+moon build cmd/gulp --release --target native
 ```
 
 The release binary is emitted at:
 
 ```text
-mulp/_build/native/release/build/cmd/mulp/mulp.exe
+gulp/_build/native/release/build/cmd/gulp/gulp.exe
 ```
 
-Install it by copying that file to a directory on `PATH`, renaming it to `mulp`
+Install it by copying that file to a directory on `PATH`, renaming it to `gulp`
 on macOS/Linux if desired:
 
 ```bash
 mkdir -p ~/.local/bin
-cp mulp/_build/native/release/build/cmd/mulp/mulp.exe ~/.local/bin/mulp
-chmod +x ~/.local/bin/mulp
+cp gulp/_build/native/release/build/cmd/gulp/gulp.exe ~/.local/bin/gulp
+chmod +x ~/.local/bin/gulp
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
@@ -135,17 +135,17 @@ Run the release smoke test to verify the binary can be found through `PATH` and
 can execute the basic example end to end:
 
 ```bash
-node mulp/scripts/release_smoke.mjs
+node gulp/scripts/release_smoke.mjs
 ```
 
-The CLI validates `mulp` flags, then proxies the remaining task arguments to:
+The CLI validates `gulp` flags, then proxies the remaining task arguments to:
 
 ```bash
-moon run --target native <mulp.mbtx> -- <args>
+moon run --target native <gulp.mbtx> -- <args>
 ```
 
-Bare discovery does not fall back to `mulp.mbt` or `mulp.toml`. Legacy
-`mulp.mbt` metadata can still be loaded through an explicit path for
+Bare discovery does not fall back to `gulp.mbt` or `gulp.toml`. Legacy
+`gulp.mbt` metadata can still be loaded through an explicit path for
 compatibility tests.
 
 ### Exit Codes
@@ -155,8 +155,8 @@ The native command keeps its status source explicit:
 | Case | Status | Stream |
 | --- | ---: | --- |
 | `--help`, `--version`, `-v`, successful task, successful `--tasks` / `--tasks-simple` / `-T` / `--tree` | `0` | stdout |
-| CLI usage error, missing `mulp.mbtx`, unreadable config, malformed legacy config | `1` | stderr |
-| Unknown task reported by `mulp.mbtx` | script status, usually `1` | script stderr |
+| CLI usage error, missing `gulp.mbtx`, unreadable config, malformed legacy config | `1` | stderr |
+| Unknown task reported by `gulp.mbtx` | script status, usually `1` | script stderr |
 | `--watch <task>` where the script task fails | script status, usually `1` | script stderr |
 | Explicit legacy entry or `moon run` process failure | child process status | child stdout/stderr |
 
@@ -234,7 +234,7 @@ when raw bytes are needed, and `read_all(max_bytes=...)` when a bounded text
 string is needed.
 
 For plugin logic that would use `through2` in gulp, prefer
-`mulpjs/mulp/through2` and pipe typed transforms directly:
+`i5ting/gulp/through2` and pipe typed transforms directly:
 
 ```moonbit
 let rename = @through2.object_transform_files(
@@ -264,7 +264,7 @@ Native `file_dest` writes byte streams chunk by chunk, so outputs larger than th
 in-memory `read_all` limit do not need to be buffered as one string.
 Use `merge_sources([a, b])` to concatenate multiple source streams while
 preserving stream order and error propagation.
-`filter_files`, `map_files`, `flat_map_files`, and `mulpjs/mulp/through2`
+`filter_files`, `map_files`, `flat_map_files`, and `i5ting/gulp/through2`
 cover the common zero/one/many transform helpers used by gulp-style plugins.
 Use `concat_plugin("bundle.txt")` as a stream-level plugin when multiple
 buffered input files should become one output file:
@@ -273,25 +273,25 @@ buffered input files should become one output file:
 let bundle = src([a, b]).pipe_stream(concat_plugin("bundle.txt"))
 ```
 
-Native async task integration lives in `mulpjs/mulp/stream_async`. Its
+Native async task integration lives in `i5ting/gulp/stream_async`. Its
 `async_task_from_stream(name, stream, signals=...)` adapter drains a `FileStream`
 and uses the drain result as the task completion signal. The adapter registers
 that stream completion signal with the shared completion validator, so tasks
 that also declare callback or process completion fail before draining.
-In `mulpjs/mulp/core`, `new_async_registry()`, `async_task(...)`,
+In `i5ting/gulp/core`, `new_async_registry()`, `async_task(...)`,
 `async_task_from(...)`, `async_series(...)`, and `async_parallel(...)` provide
-the native async task graph. `mulpjs/mulp/entry` mirrors those helpers with
+the native async task graph. `i5ting/gulp/entry` mirrors those helpers with
 `new_async_registry()`, `async_task(...)`, `async_task_from(...)`,
 `async_run_args(...)`, `render_async_args(...)`, and
 `async_run_entry_args(...)` so custom entry wiring can run async tasks, render
 task lists/trees, and fall back to the default `build` task without a hand-written
 argument dispatcher.
-In `mulpjs/mulp/core`, `async_task_from_callback(name, register)` supports an explicit
+In `i5ting/gulp/core`, `async_task_from_callback(name, register)` supports an explicit
 callback-style completion protocol, waits until the callback is called, and
 rejects duplicate callbacks.
 `validate_async_completion_signals(name, signals)` rejects tasks that combine
 completion modes, such as returning a stream while also calling a callback.
-Native child process task integration lives in `mulpjs/mulp/platform_async`.
+Native child process task integration lives in `i5ting/gulp/platform_async`.
 `async_task_from_process(name, command)` spawns a child process, awaits its exit
 code, and cancels the child when the shared task context is cancelled.
 `async_watch_loop(...)` connects normalized glob watch events to a debounced
@@ -326,31 +326,31 @@ moon bench --package vinyl --target native
 moon bench --package vinyl_fs --target native
 ```
 
-Use the comparison harness to run the same release-native mulp scenarios next
+Use the comparison harness to run the same release-native gulp scenarios next
 to local JS scenarios with repeated medians. The harness exits non-zero when
 MoonBit native is slower than JS for any selected scenario:
 
 ```bash
-node mulp/scripts/bench_compare.mjs
-node mulp/scripts/bench_compare.mjs --json
-node mulp/scripts/bench_compare.mjs --scenario vinyl-fs-src-buffer-1000 --rounds 3
-node mulp/scripts/bench_compare.mjs --scenario pipeline-memory-dest --rounds 3
+node gulp/scripts/bench_compare.mjs
+node gulp/scripts/bench_compare.mjs --json
+node gulp/scripts/bench_compare.mjs --scenario vinyl-fs-src-buffer-1000 --rounds 3
+node gulp/scripts/bench_compare.mjs --scenario pipeline-memory-dest --rounds 3
 ```
 
 ### CLI Script Model
 
-`mulp.mbtx` is the user-facing task entry. The CLI discovers it upward from the
-current directory or accepts an explicit path through `--config`, `--mulpfile`,
+`gulp.mbtx` is the user-facing task entry. The CLI discovers it upward from the
+current directory or accepts an explicit path through `--config`, `--gulpfile`,
 `--file`, or `--gulpfile`, then proxies the original task arguments to MoonBit:
 
 ```moonbit
-let command = moon_run_script_command("/workspace/app/mulp.mbtx", ["build"])
+let command = moon_run_script_command("/workspace/app/gulp.mbtx", ["build"])
 ```
 
 `command.executable` is `"moon"` and `command.args` is
-`["run", "--target", "native", "/workspace/app/mulp.mbtx", "--", "build"]`.
+`["run", "--target", "native", "/workspace/app/gulp.mbtx", "--", "build"]`.
 
-Legacy `mulp.mbt` metadata files can still be loaded through an explicit path
+Legacy `gulp.mbt` metadata files can still be loaded through an explicit path
 for compatibility tests, where `parse_config` and `moon_run_command` infer or
 read the older entry package shape.
 
@@ -369,21 +369,21 @@ set of config files:
 ```moonbit
 let result = dispatch_cli(
   cwd="/workspace/app/src",
-  files=[("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")],
+  files=[("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")],
   args=["build"],
   registry=registry,
 ).unwrap()
 ```
 
-The native command package discovers a real `mulp.mbtx` upward from the current
-directory, supports `--config`, `--mulpfile`, `--file`, `--tasks`, and `--tree`,
+The native command package discovers a real `gulp.mbtx` upward from the current
+directory, supports `--config`, `--gulpfile`, `--file`, `--tasks`, and `--tree`,
 and runs task scripts as:
 
 ```bash
-moon run --target native <mulp.mbtx> -- <task>
+moon run --target native <gulp.mbtx> -- <task>
 ```
 
-For example, this `mulp.mbtx` dispatches `mulp build` directly:
+For example, this `gulp.mbtx` dispatches `gulp build` directly:
 
 ```moonbit
 import {
@@ -405,11 +405,11 @@ fn main {
 
 Discovery does not automatically fall back to legacy config files. Projects
 that still need the legacy parser can pass an explicit path with `--config`,
-`--mulpfile`, or `--file`; bare `mulp` searches for `mulp.mbtx` only.
+`--gulpfile`, or `--file`; bare `gulp` searches for `gulp.mbtx` only.
 
 ### Example Project
 
-A minimal project keeps `mulp.mbtx` at the workspace root:
+A minimal project keeps `gulp.mbtx` at the workspace root:
 
 ```moonbit
 import {
@@ -463,7 +463,7 @@ ignore(@core.task(registry, "default", fn(ctx) { all.run(ctx) }))
 Watch is invoked through the CLI:
 
 ```bash
-mulp --watch build
+gulp --watch build
 ```
 
 Current watch support proxies the watch request to the script and runs the task
@@ -472,14 +472,14 @@ watch TODOs.
 
 Key differences from gulp today:
 
-- `mulp.mbtx` is MoonBit source, not JavaScript.
+- `gulp.mbtx` is MoonBit source, not JavaScript.
 - Node gulp plugins cannot be reused directly.
 - Streams are native MoonBit `FileStream` / `ByteStream` values.
-- Bare discovery searches for `mulp.mbtx`; legacy config files require an explicit path.
+- Bare discovery searches for `gulp.mbtx`; legacy config files require an explicit path.
 
 ### Migrating from `gulpfile.js`
 
-Move the task entry from JavaScript exports to one `mulp.mbtx` script at the
+Move the task entry from JavaScript exports to one `gulp.mbtx` script at the
 project root. A gulp task exported as `exports.clean = clean` becomes a branch
 in the script dispatcher, and the default export becomes the fallback task when
 no CLI task name is provided.
@@ -512,24 +512,24 @@ fn main {
 ```
 
 Replace `gulp --tasks` / `gulp --tree` support with explicit `--tasks` and
-`--tree` branches in `mulp.mbtx`, as shown in the quick start. Replace
-`gulpfile.js`, `gulpfile.mjs`, and transpiled gulpfiles with `mulp.mbtx`; the
-CLI passes task arguments to `moon run --target native <mulp.mbtx> -- <args>`.
-`mulp --tasks-simple` is accepted as a gulp-compatible alias and is normalized
-to `--tasks` before invoking `mulp.mbtx`.
+`--tree` branches in `gulp.mbtx`, as shown in the quick start. Replace
+`gulpfile.js`, `gulpfile.mjs`, and transpiled gulpfiles with `gulp.mbtx`; the
+CLI passes task arguments to `moon run --target native <gulp.mbtx> -- <args>`.
+`gulp --tasks-simple` is accepted as a gulp-compatible alias and is normalized
+to `--tasks` before invoking `gulp.mbtx`.
 
 MoonBit stream helpers mirror gulp's `src().pipe(...).pipe(dest())` shape in
 the library packages. Standalone `.mbtx` scripts import those helpers through a
 registry-resolvable module path, for example
-`"mulpjs/mulp@0.1.0/entry"` or `"mulpjs/mulp@0.1.0/stream"`.
+`"i5ting/gulp@0.1.0/entry"` or `"i5ting/gulp@0.1.0/stream"`.
 
 For repository verification, `scripts/test_mbtx_entry_parallel.mjs` packages the
-local module into an isolated registry cache, runs a real `mulp.mbtx`, and
+local module into an isolated registry cache, runs a real `gulp.mbtx`, and
 checks that `@entry.parallel([clean, scripts])` completes near one sleep.
 
 ### Migration Checklist
 
-1. Create one `mulp.mbtx` at the project root.
+1. Create one `gulp.mbtx` at the project root.
 2. Move exported gulp tasks into named MoonBit task values or explicit
    dispatcher branches.
 3. Map `exports.default` to the task selected when no CLI task is passed.
@@ -540,16 +540,16 @@ checks that `@entry.parallel([clean, scripts])` completes near one sleep.
    for Vinyl pipelines, or `@stream.file_stream(...).pipe_stream(@through2.object_transform_files(...))`
    for lower-level file pipelines.
 6. Replace Node callback tasks with `@core.async_task_from_callback(...)`.
-7. Replace `gulp.watch(globs, task)` with `mulp --watch task` for CLI workflows
+7. Replace `gulp.watch(globs, task)` with `gulp --watch task` for CLI workflows
    or `@platform_async.async_watch_loop(...)` for embedded watch loops.
-8. Run `mulp --tasks` and `mulp --tree build` after migration to verify the task
+8. Run `gulp --tasks` and `gulp --tree build` after migration to verify the task
    registry output matches the old gulp CLI shape.
 
 ### Current Incompatibilities
 
-`mulp` is intentionally MoonBit-native and does not execute JavaScript
+`gulp` is intentionally MoonBit-native and does not execute JavaScript
 gulpfiles. `gulpfile.js`, `gulpfile.mjs`, Babel/TypeScript-transpiled gulpfiles,
-and npm gulp plugins must be migrated to `mulp.mbtx`, MoonBit transforms, or
+and npm gulp plugins must be migrated to `gulp.mbtx`, MoonBit transforms, or
 external process tasks.
 
 Node stream plugins are not loaded directly. Port the transform to MoonBit when
@@ -565,32 +565,32 @@ and Windows event backends are implemented.
 
 ### Common gulp Recipe Mappings
 
-| gulp recipe | mulp shape |
+| gulp recipe | gulp shape |
 | --- | --- |
 | `gulp.src(globs).pipe(plugin()).pipe(gulp.dest(outDir))` | Use `@vinyl_fs.src(...)`, `@through2.object_transform_vinyl(...)`, and `@vinyl_fs.dest(...)`. |
 | `gulp.series(clean, gulp.parallel(styles, scripts))` | Register `clean`, `styles`, and `scripts`, then expose `@entry.series([clean, @entry.parallel([styles, scripts])])`. |
-| `gulp.watch(globs, task)` | Use `mulp --watch task` from the CLI, or wire `@platform_async.async_watch_loop(...)` when embedding a watcher. |
+| `gulp.watch(globs, task)` | Use `gulp --watch task` from the CLI, or wire `@platform_async.async_watch_loop(...)` when embedding a watcher. |
 | `gulp.src(globs, { since: gulp.lastRun(task) })` | Use `@core.last_run(...)` / `@core.last_run_async(...)` with `src(..., since=...)`. |
 | Callback task `function(done) { ...; done(err) }` | Use `@core.async_task_from_callback(...)`; duplicate completion is rejected. |
 | Stream-returning task | Use `@stream_async.async_task_from_stream(...)` so the task completes when the stream drains or fails. |
-| `gulp --tasks-simple` | Use `mulp --tasks-simple`; it is normalized to `--tasks` for `mulp.mbtx` scripts. |
-| `gulp --tasks` / `gulp --tree` | Implement `--tasks` / `--tree` branches through `@entry.async_run_entry_args(...)` or an explicit `mulp.mbtx` dispatcher. |
+| `gulp --tasks-simple` | Use `gulp --tasks-simple`; it is normalized to `--tasks` for `gulp.mbtx` scripts. |
+| `gulp --tasks` / `gulp --tree` | Implement `--tasks` / `--tree` branches through `@entry.async_run_entry_args(...)` or an explicit `gulp.mbtx` dispatcher. |
 
 ### Gulp CLI Compatibility
 
-| gulp CLI flag or behavior | mulp status | Notes |
+| gulp CLI flag or behavior | gulp status | Notes |
 | --- | --- | --- |
-| `gulp` default task | Supported as `mulp` | The selected default is defined by the `mulp.mbtx` dispatcher. |
-| `gulp <task>` | Supported as `mulp <task>` | One task name is accepted by the native CLI and forwarded to `mulp.mbtx`. |
-| `gulp <task> <task>` concurrent CLI tasks | Not supported yet | Use an explicit `@entry.parallel([...])` task in `mulp.mbtx`. |
-| `-v` / `--version` | Supported | Prints the native `mulp` version. |
+| `gulp` default task | Supported as `gulp` | The selected default is defined by the `gulp.mbtx` dispatcher. |
+| `gulp <task>` | Supported as `gulp <task>` | One task name is accepted by the native CLI and forwarded to `gulp.mbtx`. |
+| `gulp <task> <task>` concurrent CLI tasks | Not supported yet | Use an explicit `@entry.parallel([...])` task in `gulp.mbtx`. |
+| `-v` / `--version` | Supported | Prints the native `gulp` version. |
 | `--cwd <dir>` | Supported | Discovery and command execution use the supplied working directory. |
-| `--gulpfile <path>` | MoonBit-compatible alias | Points to `mulp.mbtx` or explicit legacy `mulp.mbt`; it does not execute JS gulpfiles. |
-| `--file <path>` / `--mulpfile <path>` | Supported | `--mulpfile` is the preferred native spelling. |
+| `--gulpfile <path>` | MoonBit-compatible alias | Points to `gulp.mbtx` or explicit legacy `gulp.mbt`; it does not execute JS gulpfiles. |
+| `--file <path>` / `--gulpfile <path>` | Supported | `--gulpfile` is the preferred native spelling. |
 | `--tasks-simple` | Supported | Normalized to `--tasks` before script execution. |
-| `--tasks` | Supported with mulp semantics | `mulp` expects the script to print the task list; gulp's decorated tree output is not cloned. |
-| `-T` | Supported as an alias for `--tasks` | It lists tasks with current mulp semantics rather than gulp's decorated task tree. |
-| `--require <module>` | Not supported | `mulp.mbtx` is MoonBit script mode, not a JS/transpiled gulpfile. |
+| `--tasks` | Supported with gulp semantics | `gulp` expects the script to print the task list; gulp's decorated tree output is not cloned. |
+| `-T` | Supported as an alias for `--tasks` | It lists tasks with current gulp semantics rather than gulp's decorated task tree. |
+| `--require <module>` | Not supported | `gulp.mbtx` is MoonBit script mode, not a JS/transpiled gulpfile. |
 | `--verify` | Not supported | npm plugin blacklist verification does not apply to native MoonBit plugins. |
 | `--color` / `--no-color` / `--silent` | Not supported yet | Current output is plain stdout/stderr from the script and native command. |
 
@@ -610,7 +610,7 @@ exports.deploy = function deploy(done) {
 };
 ```
 
-In `mulpjs/mulp/core`, the native async equivalents are explicit task values. Use
+In `i5ting/gulp/core`, the native async equivalents are explicit task values. Use
 `@entry.series([clean, build])` and `@entry.parallel([styles, scripts])` for
 task-level ordering and concurrency, wrap callback-style work with
 `@core.async_task_from_callback`, and wrap stream completion with
@@ -658,14 +658,14 @@ rule that a task should use one completion signal.
 
 ### Node Plugin Compatibility
 
-`mulp` does not load npm gulp plugins directly. gulp plugins are JavaScript
-Transform streams that run inside Node, while `mulp` plugins are MoonBit
+`gulp` does not load npm gulp plugins directly. gulp plugins are JavaScript
+Transform streams that run inside Node, while `gulp` plugins are MoonBit
 transforms over native `FileStream` and `ByteStream` values. Port plugin logic
 to a MoonBit transform, wrap an external tool as a process task, or keep that
 part of the pipeline in gulp until a dedicated adapter exists.
 
 For plugin logic that was previously written with `through2`, prefer
-`mulpjs/mulp/through2`. It is not a JavaScript API clone: it exposes typed
+`i5ting/gulp/through2`. It is not a JavaScript API clone: it exposes typed
 MoonBit transforms (`transform_bytes`, `object_transform_files`,
 `object_transform_vinyl`, lower-level `through_files` / `through_vinyl`, and
 fresh-state `ctor_*` factories) instead of Node callback, `this.push`, and
@@ -686,7 +686,7 @@ Common `through2` callback patterns map to explicit `Result` values:
 
 ### Gulp API Mapping
 
-| gulp API | mulp API | Notes |
+| gulp API | gulp API | Notes |
 | --- | --- | --- |
 | `src(globs, options)` | `@vinyl_fs.src(globs, @vinyl_fs.src_options(...))` or lower-level `@stream.src(files)` | `vinyl_fs` reads the native filesystem and preserves Vinyl-style `cwd`, `base`, `relative`, metadata, buffered, and streaming contents. `allow_empty`, `remove_bom`, `encoding=false`, and `sourcemaps=true` map to gulp's `allowEmpty`, `removeBOM`, raw byte, and adjacent `.map` loading behavior. |
 | `dest(outDir, options)` | `@vinyl_fs.dest(outDir)` / `@vinyl_fs.dest_with_options(...)` or lower-level `@stream.file_dest(...)` | Writes real files and returns files with updated destination paths. `mode`, `dir_mode`, and `mtime_ms` metadata are applied to native filesystem entries; `overwrite=false`, `append=true`, external `sourcemaps=Some(".")`, and `inline_sourcemaps=true` cover the matching vinyl-fs write modes. |
@@ -700,28 +700,28 @@ Common `through2` callback patterns map to explicit `Result` values:
 | callback completion | `@core.async_task_from_callback(...)` | Duplicate completion and mixed completion modes are rejected. |
 | stream completion | `@stream_async.async_task_from_stream(...)` | A stream task completes when the stream drains or fails. |
 
-### Migrating from `mulp.toml`
+### Migrating from `gulp.toml`
 
-`mulp.toml` was an entry metadata file that pointed at a separate MoonBit entry
-package. `mulp.mbtx` replaces that model with a single script-mode entry file.
+`gulp.toml` was an entry metadata file that pointed at a separate MoonBit entry
+package. `gulp.mbtx` replaces that model with a single script-mode entry file.
 
 Use this mapping:
 
 ```text
-mulp.toml entry package -> mulp.mbtx script
-mulp.toml task metadata -> --tasks / --tree output from mulp.mbtx
-moon run <entry> -- <task> -> moon run --target native <mulp.mbtx> -- <task>
+gulp.toml entry package -> gulp.mbtx script
+gulp.toml task metadata -> --tasks / --tree output from gulp.mbtx
+moon run <entry> -- <task> -> moon run --target native <gulp.mbtx> -- <task>
 ```
 
-Bare discovery now searches upward only for `mulp.mbtx`. It does not
-automatically fall back to `mulp.toml` or legacy `mulp.mbt` metadata. Existing
+Bare discovery now searches upward only for `gulp.mbtx`. It does not
+automatically fall back to `gulp.toml` or legacy `gulp.mbt` metadata. Existing
 compatibility tests can still pass an explicit path with `--config`,
-`--mulpfile`, or `--file`, but new projects should create `mulp.mbtx` and put
+`--gulpfile`, or `--file`, but new projects should create `gulp.mbtx` and put
 their task dispatch there.
 
 ### Legacy Task Entry Convention
 
-The older explicit `mulp.mbt` compatibility path still supports a MoonBit build
+The older explicit `gulp.mbt` compatibility path still supports a MoonBit build
 entry package. That package registers tasks by exposing a function that
 matches `@entry.RegisterTasks`. By convention, name it `register_tasks`; it
 receives a `Registry` owned by the entry runtime and adds task definitions to it:
@@ -789,10 +789,10 @@ async fn main {
 }
 ```
 
-See `examples/basic` for a minimal `mulp.mbtx` task script.
+See `examples/basic` for a minimal `gulp.mbtx` task script.
 
-The CLI accepts `mulp --watch build` and proxies it to
-`moon run --target native <mulp.mbtx> -- --watch build`; the current script runs
+The CLI accepts `gulp --watch build` and proxies it to
+`moon run --target native <gulp.mbtx> -- --watch build`; the current script runs
 the named task once. The platform async watch loop already supports debounce,
 mid-run pending rebuilds, and rerun after completion, but the CLI still needs to
 wire that loop to a long-running native filesystem watcher.

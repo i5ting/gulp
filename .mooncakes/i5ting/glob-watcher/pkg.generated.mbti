@@ -1,0 +1,56 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "i5ting/glob-watcher"
+
+import {
+  "i5ting/chokidar",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn glob_match(String, String) -> Bool
+
+pub fn parse_globs(Array[String]) -> (Array[GlobPattern], Array[GlobPattern])
+
+pub fn watch(@chokidar.WatchPaths, Options, (@chokidar.Event) -> Unit raise) -> Unit raise GlobWatcherError
+
+// Errors
+pub(all) suberror GlobWatcherError {
+  GlobError(String)
+  SetupError(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub(all) struct GlobPattern {
+  raw : String
+  base_dir : String
+  is_negation : Bool
+}
+pub fn GlobPattern::parse(String) -> Array[Self]
+
+pub struct GlobWatcher {
+  // private fields
+}
+pub fn GlobWatcher::close(Self) -> Unit
+pub fn GlobWatcher::get_watched(Self) -> Map[String, Array[String]]
+pub fn GlobWatcher::new(@chokidar.WatchPaths, Options) -> Self raise GlobWatcherError
+pub fn GlobWatcher::on(Self, @chokidar.EventName, (@chokidar.Event) -> Unit) -> Self
+pub fn GlobWatcher::run(Self, cb? : (@chokidar.Event) -> Unit raise) -> Unit raise GlobWatcherError
+pub fn GlobWatcher::tick(Self, cb? : (@chokidar.Event) -> Unit raise) -> Unit raise GlobWatcherError
+
+pub(all) struct Options {
+  delay : Int
+  queue : Bool
+  events : Array[@chokidar.EventName]
+  ignore_initial : Bool
+  ignored : Array[@chokidar.Matcher]
+  cwd : String?
+  depth : Int
+  loop_interval : Int
+  use_polling : Bool
+}
+pub fn Options::default() -> Self
+
+// Type aliases
+
+// Traits
+

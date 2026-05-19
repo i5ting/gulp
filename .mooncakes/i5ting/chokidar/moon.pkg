@@ -1,0 +1,22 @@
+import {
+  "i5ting/readdirp",
+  "moonbitlang/regexp",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/env",
+}
+
+options(
+  native_stub: [ "fs_native.c", "scanner_native.c" ],
+  "warn-list": "-7-9-24-29",
+  targets: {
+    "backend_native.mbt": [ "native", "llvm" ],
+    "backend_stub.mbt": [ "wasm", "wasm-gc", "js" ],
+    "scanner.mbt": [ "native", "llvm" ],
+    "scanner_stub.mbt": [ "wasm", "wasm-gc", "js" ],
+    "chokidar_native_test.mbt": [ "native", "llvm" ],
+    "backend_wbtest.mbt": [ "native", "llvm" ],
+    "scanner_test_fs_wbtest.mbt": [ "native", "llvm" ],
+    "scanner_wbtest.mbt": [ "native", "llvm" ],
+    "watcher_wbtest.mbt": [ "native", "llvm" ],
+  },
+)
