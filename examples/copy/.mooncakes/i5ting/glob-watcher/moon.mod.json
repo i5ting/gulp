@@ -1,0 +1,13 @@
+{
+  "name": "i5ting/glob-watcher",
+  "version": "0.1.0",
+  "deps": {
+    "i5ting/chokidar": "0.1.0"
+  },
+  "preferred-backend": "native",
+  "readme": "README.mbt.md",
+  "repository": "https://github.com/i5ting/globwatcher",
+  "license": "Apache-2.0",
+  "keywords": ["glob", "watcher", "filesystem", "native"],
+  "description": "Glob-pattern file watcher for MoonBit native — debounced, queue-aware, chokidar-backed."
+}

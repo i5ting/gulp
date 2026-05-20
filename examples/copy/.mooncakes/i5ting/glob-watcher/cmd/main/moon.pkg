@@ -1,0 +1,13 @@
+import {
+  "i5ting/glob-watcher" @globwatcher,
+  "i5ting/chokidar",
+}
+
+options(
+  "is-main": true,
+  "warn-list": "-29",
+  targets: {
+    "main.mbt":      [ "native", "llvm" ],
+    "stub_wasm.mbt": [ "wasm-gc", "wasm", "js" ],
+  },
+)

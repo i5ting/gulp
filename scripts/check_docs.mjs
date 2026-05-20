@@ -15,7 +15,7 @@ const required = [
   '`gulp.series(clean, gulp.parallel(styles, scripts))`',
   '`gulp.watch(globs, task)`',
   'npm gulp plugins',
-  'mulp.mbtx',
+  'gulp.mbtx',
 ];
 
 for (const text of required) {

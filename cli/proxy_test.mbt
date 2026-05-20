@@ -21,31 +21,31 @@ test "moon run command uses default task" {
 
 ///|
 test "moon run script command proxies empty args to mbtx file" {
-  let command = moon_run_script_command("/workspace/app/mulp.mbtx", [])
+  let command = moon_run_script_command("/workspace/app/gulp.mbtx", [])
   inspect(command.executable, content="moon")
   inspect(
     command.args.join(" "),
-    content="run --quiet --target native /workspace/app/mulp.mbtx --",
+    content="run --quiet --target native /workspace/app/gulp.mbtx --",
   )
 }
 
 ///|
 test "moon run script command proxies task args to mbtx file" {
-  let command = moon_run_script_command("/workspace/app/mulp.mbtx", ["build"])
+  let command = moon_run_script_command("/workspace/app/gulp.mbtx", ["build"])
   inspect(
     command.args.join(" "),
-    content="run --quiet --target native /workspace/app/mulp.mbtx -- build",
+    content="run --quiet --target native /workspace/app/gulp.mbtx -- build",
   )
 }
 
 ///|
 test "moon run script command proxies watch args to mbtx file" {
-  let command = moon_run_script_command("/workspace/app/mulp.mbtx", [
+  let command = moon_run_script_command("/workspace/app/gulp.mbtx", [
     "--watch", "build",
   ])
   inspect(
     command.args.join(" "),
-    content="run --quiet --target native /workspace/app/mulp.mbtx -- --watch build",
+    content="run --quiet --target native /workspace/app/gulp.mbtx -- --watch build",
   )
 }
 

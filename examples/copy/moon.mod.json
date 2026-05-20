@@ -1,0 +1,9 @@
+{
+  "name": "mulpjs/copy-example",
+  "version": "0.1.0",
+  "deps": {
+    "i5ting/gulp": {
+      "path": "../.."
+    }
+  }
+}

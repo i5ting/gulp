@@ -32,6 +32,9 @@
     "async_register.mbt": [
       "native"
     ],
+    "run.mbt": [
+      "native"
+    ],
     "register_test.mbt": [
       "native"
     ],

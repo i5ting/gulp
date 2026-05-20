@@ -1,0 +1,14 @@
+import {
+  "i5ting/chokidar" @lib,
+  "moonbitlang/core/argparse",
+}
+
+options(
+  "is-main": true,
+  native_stub: [ "main_native.c" ],
+  "warn-list": "-29",
+  targets: {
+    "main.mbt": [ "native", "llvm" ],
+    "main_wasm.mbt": [ "wasm", "wasm-gc", "js" ],
+  },
+)

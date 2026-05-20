@@ -9,7 +9,7 @@ fn normalize_dir(path : String) -> String {
 
 ///|
 fn default_config_file_name() -> String {
-  "mulp.mbtx"
+  "gulp.mbtx"
 }
 
 ///|

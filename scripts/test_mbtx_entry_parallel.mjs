@@ -83,7 +83,7 @@ fs.writeFileSync(
   })}\n`,
 );
 
-const mbtxPath = path.join(tmp, 'mulp.mbtx');
+const mbtxPath = path.join(tmp, 'gulp.mbtx');
 fs.writeFileSync(
   mbtxPath,
   `///|

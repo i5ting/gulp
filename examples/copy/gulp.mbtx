@@ -1,0 +1,21 @@
+///|
+import {
+  "moonbitlang/core/env" @env,
+  "i5ting/gulp/entry" @entry,
+  "i5ting/gulp/vinyl_fs" @vinyl_fs,
+}
+
+///|
+fn copy(ctx : @core.Context) -> Result[Unit, @core.MulpError] {
+  @vinyl_fs.src(["src/*.js"], @vinyl_fs.src_options(cwd="."))
+    .pipe(@vinyl_fs.dest("output/"))
+    .collect(ctx)
+    .map(fn(_) { () })
+}
+
+///|
+fn main {
+  let registry = @entry.new_registry()
+  @entry.task(registry, "copy", copy)
+  @entry.run(registry, @env.args(), default_task="copy")
+}

@@ -1,0 +1,141 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "i5ting/chokidar"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/regexp",
+}
+
+// Values
+pub fn all_event_names() -> Array[EventName]
+
+pub fn compatibility_table() -> Array[CompatibilityRow]
+
+pub fn version() -> String
+
+pub fn watch(WatchPaths, options? : Options) -> Watcher raise ChokidarError
+
+// Errors
+pub(all) suberror ChokidarError {
+  ChokidarError(String)
+} derive(Eq, @debug.Debug)
+
+// Types and methods
+pub(all) enum AtomicOption {
+  AtomicDefault
+  AtomicOff
+  AtomicWindow(Int)
+} derive(Eq, @debug.Debug)
+
+pub(all) enum AwaitWriteFinish {
+  AwaitWriteFinishOff
+  AwaitWriteFinishOn(AwaitWriteFinishOptions)
+} derive(Eq, @debug.Debug)
+pub fn AwaitWriteFinish::default_on() -> Self
+
+pub(all) struct AwaitWriteFinishOptions {
+  stability_threshold : Int
+  poll_interval : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct CompatibilityRow {
+  js_name : String
+  moonbit_name : String
+  status : CompatibilityStatus
+  reason : String
+} derive(Eq, @debug.Debug)
+
+pub(all) enum CompatibilityStatus {
+  Same
+  RenamedForMoonBitStyle
+  Unsupported
+  PlatformDependent
+} derive(Eq, @debug.Debug)
+
+pub(all) struct Event {
+  name : EventName
+  path : String
+  stats : FileStats?
+  raw : RawEvent?
+  error : ChokidarError?
+} derive(Eq, @debug.Debug)
+
+pub(all) enum EventName {
+  Add
+  Change
+  AddDir
+  Unlink
+  UnlinkDir
+  Ready
+  Raw
+  Error
+  All
+} derive(Eq, @debug.Debug)
+pub impl Show for EventName
+
+pub(all) enum FileKind {
+  File
+  Directory
+  Symlink
+  Other
+} derive(Eq, @debug.Debug)
+
+pub(all) struct FileStats {
+  size : Int64
+  mode : Int
+  modified_nanos : Int64
+} derive(Eq, @debug.Debug)
+
+pub(all) enum Matcher {
+  MatchPath(String)
+  MatchRecursivePath(String)
+  MatchFunction((String, FileStats?) -> Bool)
+  MatchRegex(@regexp.Regexp)
+}
+
+pub(all) struct Options {
+  persistent : Bool
+  ignored : Array[Matcher]
+  ignore_initial : Bool
+  follow_symlinks : Bool
+  cwd : String?
+  use_polling : Bool
+  interval : Int
+  binary_interval : Int
+  always_stat : Bool
+  depth : Int
+  ignore_permission_errors : Bool
+  atomic_option : AtomicOption
+  await_write_finish : AwaitWriteFinish
+}
+pub fn Options::default() -> Self
+
+pub(all) struct RawEvent {
+  backend_event_name : String
+  watched_path : String
+  event_path : String?
+  platform : String
+  error_message : String?
+} derive(Eq, @debug.Debug)
+
+pub(all) enum WatchPaths {
+  One(String)
+  Many(Array[String])
+} derive(Eq, @debug.Debug)
+
+pub struct Watcher {
+  // private fields
+}
+pub fn Watcher::add(Self, WatchPaths) -> Self raise ChokidarError
+pub fn Watcher::close(Self) -> Unit
+pub fn Watcher::get_watched(Self) -> Map[String, Array[String]]
+pub fn Watcher::off(Self, EventName, (Event) -> Unit) -> Self
+pub fn Watcher::on(Self, EventName, (Event) -> Unit) -> Self
+pub fn Watcher::process(Self) -> Unit raise ChokidarError
+pub fn Watcher::remove_all_listeners(Self) -> Self
+pub fn Watcher::unwatch(Self, WatchPaths) -> Self
+
+// Type aliases
+
+// Traits
+

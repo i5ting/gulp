@@ -11,9 +11,9 @@ test "mulp command renders help" {
       #|  --cwd <dir>            Run as if started in dir.
       #|  --silent               Suppress all stdout output.
       #|  --quiet                Suppress non-error output.
-      #|  --mulpfile <path>      Use an explicit mulp.mbtx.
-      #|  --gulpfile <path>      Alias for --mulpfile.
-      #|  --file <path>          Alias for --mulpfile.
+      #|  --gulpfile <path>      Use an explicit gulp.mbtx.
+      #|  --mulpfile <path>      Alias for --gulpfile.
+      #|  --file <path>          Alias for --gulpfile.
       #|  -T, --tasks            List tasks.
       #|  --tasks-simple         Alias for --tasks.
       #|  --tasks-json           List tasks as JSON (for editor integrations).
@@ -48,7 +48,7 @@ test "terminal output adds one newline for builtin text" {
 ///|
 test "real script discovery searches current directory then parents" {
   let found = discover_real_config(cwd="cmd/mulp/fixtures/mbtx-workspace/src").unwrap()
-  inspect(found.path, content="cmd/mulp/fixtures/mbtx-workspace/mulp.mbtx")
+  inspect(found.path, content="cmd/mulp/fixtures/mbtx-workspace/gulp.mbtx")
 }
 
 ///|
@@ -194,7 +194,7 @@ test "mulp command applies cwd before config discovery" {
 ///|
 test "real config discovery searches current directory then parents" {
   let found = discover_real_config(cwd="cmd/mulp/fixtures/workspace/app/src").unwrap()
-  inspect(found.path, content="cmd/mulp/fixtures/workspace/app/mulp.mbtx")
+  inspect(found.path, content="cmd/mulp/fixtures/workspace/app/gulp.mbtx")
 }
 
 ///|
@@ -350,7 +350,7 @@ test "mulp command reports missing config with nonzero status" {
   inspect(result.status, content="1")
   inspect(
     result.stderr,
-    content="Config error: could not find mulp.mbtx from cmd/mulp/fixtures/missing",
+    content="Config error: could not find gulp.mbtx from cmd/mulp/fixtures/missing",
   )
 }
 
@@ -361,7 +361,7 @@ test "mulp command does not fall back to legacy toml config" {
   inspect(result.stdout, content="")
   inspect(
     result.stderr,
-    content="Config error: could not find mulp.mbtx from cmd/mulp/fixtures/legacy-only",
+    content="Config error: could not find gulp.mbtx from cmd/mulp/fixtures/legacy-only",
   )
 }
 

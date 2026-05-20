@@ -22,7 +22,7 @@ fn dispatch_registry() -> @core.Registry {
 
 ///|
 test "dispatch builds proxy command from discovered config and default task" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app/src",
     files~,
@@ -32,7 +32,7 @@ test "dispatch builds proxy command from discovered config and default task" {
   match result {
     Proxy(command) => {
       inspect(command.executable, content="moon")
-      inspect(command.args.join(" "), content="run --quiet --target native /workspace/app/mulp.mbtx --")
+      inspect(command.args.join(" "), content="run --quiet --target native /workspace/app/gulp.mbtx --")
     }
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -40,7 +40,7 @@ test "dispatch builds proxy command from discovered config and default task" {
 
 ///|
 test "dispatch proxies explicit task to discovered mulp mbtx" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app/src",
     files~,
@@ -51,7 +51,7 @@ test "dispatch proxies explicit task to discovered mulp mbtx" {
     Proxy(command) =>
       inspect(
         command.args.join(" "),
-        content="run --quiet --target native /workspace/app/mulp.mbtx -- build",
+        content="run --quiet --target native /workspace/app/gulp.mbtx -- build",
       )
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -59,7 +59,7 @@ test "dispatch proxies explicit task to discovered mulp mbtx" {
 
 ///|
 test "dispatch proxies watch task to discovered mulp mbtx" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app/src",
     files~,
@@ -70,7 +70,7 @@ test "dispatch proxies watch task to discovered mulp mbtx" {
     Proxy(command) =>
       inspect(
         command.args.join(" "),
-        content="run --quiet --target native /workspace/app/mulp.mbtx -- --watch build",
+        content="run --quiet --target native /workspace/app/gulp.mbtx -- --watch build",
       )
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -78,7 +78,7 @@ test "dispatch proxies watch task to discovered mulp mbtx" {
 
 ///|
 test "dispatch proxies task listing to mulp mbtx instead of local registry" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app",
     files~,
@@ -89,7 +89,7 @@ test "dispatch proxies task listing to mulp mbtx instead of local registry" {
     Proxy(command) =>
       inspect(
         command.args.join(" "),
-        content="run --quiet --target native /workspace/app/mulp.mbtx -- --tasks",
+        content="run --quiet --target native /workspace/app/gulp.mbtx -- --tasks",
       )
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -97,7 +97,7 @@ test "dispatch proxies task listing to mulp mbtx instead of local registry" {
 
 ///|
 test "dispatch normalizes tasks-simple for mulp mbtx" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app",
     files~,
@@ -108,7 +108,7 @@ test "dispatch normalizes tasks-simple for mulp mbtx" {
     Proxy(command) =>
       inspect(
         command.args.join(" "),
-        content="run --quiet --target native /workspace/app/mulp.mbtx -- --tasks",
+        content="run --quiet --target native /workspace/app/gulp.mbtx -- --tasks",
       )
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -116,7 +116,7 @@ test "dispatch normalizes tasks-simple for mulp mbtx" {
 
 ///|
 test "dispatch normalizes short tasks alias for mulp mbtx" {
-  let files = [("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }")]
+  let files = [("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }")]
   let result = dispatch_cli(
     cwd="/workspace/app",
     files~,
@@ -127,7 +127,7 @@ test "dispatch normalizes short tasks alias for mulp mbtx" {
     Proxy(command) =>
       inspect(
         command.args.join(" "),
-        content="run --quiet --target native /workspace/app/mulp.mbtx -- --tasks",
+        content="run --quiet --target native /workspace/app/gulp.mbtx -- --tasks",
       )
     _ => inspect("wrong dispatch", content="proxy")
   }
@@ -136,7 +136,7 @@ test "dispatch normalizes short tasks alias for mulp mbtx" {
 ///|
 test "dispatch uses explicit config path" {
   let files = [
-    ("/workspace/app/mulp.mbtx", "fn main { println(\"build\") }"),
+    ("/workspace/app/gulp.mbtx", "fn main { println(\"build\") }"),
     ("/tmp/custom.mbtx", "fn main { println(\"custom\") }"),
   ]
   let result = dispatch_cli(

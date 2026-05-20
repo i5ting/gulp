@@ -6,7 +6,7 @@ pub struct ConfigDocument {
 
 ///|
 fn default_config_file_name() -> String {
-  "mulp.mbtx"
+  "gulp.mbtx"
 }
 
 ///|

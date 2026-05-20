@@ -9,9 +9,9 @@ pub fn mulp_command_output(_args : Array[String]) -> String {
     #|  --cwd <dir>            Run as if started in dir.
     #|  --silent               Suppress all stdout output.
     #|  --quiet                Suppress non-error output.
-    #|  --mulpfile <path>      Use an explicit mulp.mbtx.
-    #|  --gulpfile <path>      Alias for --mulpfile.
-    #|  --file <path>          Alias for --mulpfile.
+    #|  --gulpfile <path>      Use an explicit gulp.mbtx.
+    #|  --mulpfile <path>      Alias for --gulpfile.
+    #|  --file <path>          Alias for --gulpfile.
     #|  -T, --tasks            List tasks.
     #|  --tasks-simple         Alias for --tasks.
     #|  --tasks-json           List tasks as JSON (for editor integrations).
@@ -141,7 +141,7 @@ pub fn mulp_run_watch(
     return {
       status: 1,
       stdout: "",
-      stderr: @core.config_error("watch requires mulp.mbtx").message(),
+      stderr: @core.config_error("watch requires gulp.mbtx").message(),
     }
   }
   let script_path = match discover_moon_root(cwd~) {

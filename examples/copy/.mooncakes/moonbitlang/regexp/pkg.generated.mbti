@@ -1,0 +1,49 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/regexp"
+
+// Values
+pub fn compile(StringView, flags? : StringView) -> Regexp raise RegexpError
+
+// Errors
+pub suberror RegexpError {
+  RegexpError(err~ : Err, source_fragment~ : StringView)
+}
+pub impl Show for RegexpError
+
+// Types and methods
+pub enum Err {
+  InternalError
+  InvalidCharClass
+  InvalidEscape
+  InvalidNamedCapture
+  InvalidRepeatOp
+  InvalidRepeatSize
+  MissingBracket
+  MissingParenthesis
+  MissingRepeatArgument
+  TrailingBackslash
+  UnexpectedParenthesis
+}
+pub impl Show for Err
+
+type MatchResult
+pub fn MatchResult::after(Self) -> StringView
+pub fn MatchResult::before(Self) -> StringView
+pub fn MatchResult::get(Self, Int) -> StringView?
+pub fn MatchResult::groups(Self) -> Map[String, StringView]
+pub fn MatchResult::matched(Self) -> Bool
+pub fn MatchResult::results(Self) -> Array[StringView?]
+
+type Regexp
+pub fn Regexp::execute(Self, StringView) -> MatchResult
+#deprecated
+pub fn Regexp::execute_with_remainder(Self, StringView) -> (MatchResult, StringView)
+pub fn Regexp::group_by_name(Self, String) -> Int?
+pub fn Regexp::group_count(Self) -> Int
+pub fn Regexp::group_names(Self) -> Array[String]
+pub fn Regexp::match_(Self, StringView) -> MatchResult?
+
+// Type aliases
+
+// Traits
+

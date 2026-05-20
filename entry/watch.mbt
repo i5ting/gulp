@@ -151,7 +151,7 @@ pub fn watch_new(
 /// Watch glob patterns and re-run `task` on every debounced change.
 /// Blocks until the process is terminated (or `@glob_watcher` raises).
 ///
-/// Example in mulp.mbtx:
+/// Example in gulp.mbtx:
 ///   let build = async_task(registry, "build", fn(ctx) { ... })
 ///   watch(["src/**/*.mbt"], build)
 pub fn watch(

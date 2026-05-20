@@ -1,0 +1,20 @@
+import {
+  "i5ting/chokidar",
+  "moonbitlang/core/env",
+}
+
+options(
+  native_stub: [ "globwatcher_native.c" ],
+  "warn-list": "-1-7-9-24-29",
+  targets: {
+    "globwatcher.mbt":      [ "native", "llvm" ],
+    "glob.mbt":             [ "native", "llvm" ],
+    "debounce.mbt":         [ "native", "llvm" ],
+    "queue.mbt":            [ "native", "llvm" ],
+    "globwatcher_stub.mbt": [ "wasm-gc", "wasm", "js" ],
+    "glob_stub.mbt":        [ "wasm-gc", "wasm", "js" ],
+    "globwatcher_wbtest.mbt":        [ "native", "llvm" ],
+    "globwatcher_pubapi_wbtest.mbt": [ "native", "llvm" ],
+    "globwatcher_test.mbt":          [ "native", "llvm" ],
+  },
+)

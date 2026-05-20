@@ -2,7 +2,7 @@
 test "cli runtime selects explicit mulpfile before discovered file" {
   let runtime = cli_runtime(
     cwd="/workspace/app",
-    discovered=Some("/workspace/app/mulp.mbtx"),
+    discovered=Some("/workspace/app/gulp.mbtx"),
     explicit=Some("/tmp/custom.mbtx"),
   )
   inspect(runtime.entry_file().unwrap(), content="/tmp/custom.mbtx")
@@ -12,9 +12,9 @@ test "cli runtime selects explicit mulpfile before discovered file" {
 test "cli runtime falls back to discovered mulpfile" {
   let runtime = cli_runtime(
     cwd="/workspace/app",
-    discovered=Some("/workspace/app/mulp.mbtx"),
+    discovered=Some("/workspace/app/gulp.mbtx"),
   )
-  inspect(runtime.entry_file().unwrap(), content="/workspace/app/mulp.mbtx")
+  inspect(runtime.entry_file().unwrap(), content="/workspace/app/gulp.mbtx")
 }
 
 ///|
