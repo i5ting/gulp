@@ -410,12 +410,10 @@ fn parallel_task(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(())
 
 ///|
 fn main {
-  let registry = @entry.new_registry()
-  @entry.task(registry, "build", build)
-  @entry.task(registry, "clean", clean)
-  @entry.task(registry, "watch", watch)
-  @entry.task(registry, "parallel", parallel_task)
-  @entry.run(registry, @env.args(), default_task="build")
+  @entry.run_tasks(
+    [("build", build), ("clean", clean), ("watch", watch), ("parallel", parallel_task)],
+    @env.args(),
+  )
 }
 ```
 
@@ -435,17 +433,21 @@ let pipeline = @stream.src([input])
   .pipe(@stream.file_dest("dist"))
 ```
 
-Task composition uses the core helpers:
+For `series`/`parallel` composition, use the registry API to get task handles:
 
 ```moonbit
-let clean = @entry.task(registry, "clean", fn(_ctx) -> Result[Unit, @core.MulpError] {
-  Ok(())
-})
-let build = @entry.task(registry, "build", fn(_ctx) -> Result[Unit, @core.MulpError] {
-  Ok(())
-})
-let all = @core.series([clean, build])
-ignore(@core.task(registry, "default", fn(ctx) { all.run(ctx) }))
+fn main {
+  let registry = @entry.new_registry()
+  let clean = @entry.task(registry, "clean", fn(_ctx) -> Result[Unit, @core.MulpError] {
+    Ok(())
+  })
+  let build = @entry.task(registry, "build", fn(_ctx) -> Result[Unit, @core.MulpError] {
+    Ok(())
+  })
+  let all = @core.series([clean, build])
+  ignore(@core.task(registry, "default", fn(ctx) { all.run(ctx) }))
+  @entry.run(registry, @env.args())
+}
 ```
 
 Watch is invoked through the CLI:
@@ -491,14 +493,11 @@ fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] { Ok(()) }
 
 ///|
 fn main {
-  let registry = @entry.new_registry()
-  @entry.task(registry, "clean", clean)
-  @entry.task(registry, "build", build)
-  @entry.run(registry, @env.args(), default_task="build")
+  @entry.run_tasks([("clean", clean), ("build", build)], @env.args())
 }
 ```
 
-`@entry.run` handles `--tasks`, `--tree`, `--tasks-json`, and task dispatch
+`@entry.run_tasks` handles `--tasks`, `--tree`, `--tasks-json`, and task dispatch
 automatically — no hand-written argument dispatcher is needed. Replace
 `gulpfile.js`, `gulpfile.mjs`, and transpiled gulpfiles with `gulp.mbtx`; the
 CLI passes task arguments to `moon run --target native <gulp.mbtx> -- <args>`.
@@ -517,9 +516,9 @@ checks that `@entry.parallel([clean, scripts])` completes near one sleep.
 ### Migration Checklist
 
 1. Create one `gulp.mbtx` at the project root.
-2. Move exported gulp tasks into named MoonBit task values or explicit
-   dispatcher branches.
-3. Map `exports.default` to the task selected when no CLI task is passed.
+2. Move exported gulp tasks into named MoonBit functions and register them
+   with `@entry.run_tasks([("name", fn), ...], @env.args())`.
+3. Map `exports.default` to the `default_task` parameter of `run_tasks`.
 4. Replace `gulp.series(...)` and `gulp.parallel(...)` with `@entry.series([...])`
    and `@entry.parallel([...])`.
 5. Replace `gulp.src(globs).pipe(plugin()).pipe(gulp.dest(outDir))` with
@@ -561,7 +560,7 @@ and Windows event backends are implemented.
 | Callback task `function(done) { ...; done(err) }` | Use `@core.async_task_from_callback(...)`; duplicate completion is rejected. |
 | Stream-returning task | Use `@stream_async.async_task_from_stream(...)` so the task completes when the stream drains or fails. |
 | `gulp --tasks-simple` | Use `gulp --tasks-simple`; it is normalized to `--tasks` for `gulp.mbtx` scripts. |
-| `gulp --tasks` / `gulp --tree` | Implement `--tasks` / `--tree` branches through `@entry.async_run_entry_args(...)` or an explicit `gulp.mbtx` dispatcher. |
+| `gulp --tasks` / `gulp --tree` | Handled automatically by `@entry.run_tasks(...)` — no explicit dispatcher needed. |
 
 ### Gulp CLI Compatibility
 
@@ -679,7 +678,7 @@ Common `through2` callback patterns map to explicit `Result` values:
 | `dest(outDir, options)` | `@vinyl_fs.dest(outDir)` / `@vinyl_fs.dest_with_options(...)` or lower-level `@stream.file_dest(...)` | Writes real files and returns files with updated destination paths. `mode`, `dir_mode`, and `mtime_ms` metadata are applied to native filesystem entries; `overwrite=false`, `append=true`, external `sourcemaps=Some(".")`, and `inline_sourcemaps=true` cover the matching vinyl-fs write modes. |
 | `symlink(outDir, options)` | `@vinyl_fs.symlink(outDir)` / `@vinyl_fs.symlink_with_options(...)` | Emits filesystem symlinks where the native platform supports them; `relative_symlinks=true` maps to vinyl-fs `relativeSymlinks`, and `overwrite=false` preserves an existing destination link. |
 | `new Vinyl({ sourceMap })` | `@vinyl.vinyl_file(source_map=...)` | MoonBit keeps custom JS-style props in typed fields or metadata; `source_map` is first class. |
-| `task(name, fn)` | `@entry.task(...)` / `@entry.async_task(...)` | Synchronous and async registries are explicit MoonBit values. |
+| `task(name, fn)` | `@entry.run_tasks([("name", fn), ...], args)` — or `@entry.task(registry, ...)` when task handles are needed for `series`/`parallel`. | `run_tasks` is the primary pattern for `gulp.mbtx`. |
 | `series(...)` | `@entry.series([...])` / `@core.series([...])` | Preserves left-to-right task order. |
 | `parallel(...)` | `@entry.parallel([...])` / `@core.async_parallel([...])` | Native async tasks run concurrently with shared cancellation. |
 | `watch(globs, task)` | `@platform_async.async_watch_loop(...)` plus CLI watch dispatch | Event normalization and pending rebuild behavior are implemented; native OS event backends are still a TODO. |
