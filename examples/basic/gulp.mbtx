@@ -1,43 +1,38 @@
 ///|
 import {
   "moonbitlang/core/env" @env,
-  "i5ting/gulp/entry" @entry,
 }
 
 ///|
-fn build(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
-  println("example build")
-  Ok(())
-}
-
-///|
-fn clean(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
-  println("example clean")
-  Ok(())
-}
-
-///|
-fn watch(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
-  println("example watch")
-  Ok(())
-}
-
-///|
-fn parallel_task(_ctx : @core.Context) -> Result[Unit, @core.MulpError] {
-  println("parallel ok")
-  Ok(())
+fn selected_task(args : Array[String]) -> String {
+  if args.length() >= 3 && args[1] == "--watch" {
+    args[2]
+  } else if args.length() >= 2 {
+    args[1]
+  } else {
+    "build"
+  }
 }
 
 ///|
 fn main {
-  @entry.run_tasks(
-    [
-      ("build", build),
-      ("clean", clean),
-      ("watch", watch),
-      ("parallel", parallel_task),
-    ],
-    @env.args(),
-    default_task="build",
-  )
+  let args = @env.args()
+  if args.length() >= 2 && args[1] == "--tasks" {
+    println("build\nclean\nwatch\nparallel")
+  } else if args.length() >= 2 && args[1] == "--tree" {
+    println("root\n  build\n  clean\n  watch\n  parallel")
+  } else {
+    let task = selected_task(args)
+    if task == "build" {
+      println("example build")
+    } else if task == "clean" {
+      println("example clean")
+    } else if task == "watch" {
+      println("example watch")
+    } else if task == "parallel" {
+      println("parallel ok")
+    } else {
+      println("Unknown task: " + task)
+    }
+  }
 }
