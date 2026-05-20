@@ -1,6 +1,9 @@
 {
   "name": "i5ting/gulp",
   "version": "0.1.0",
+  "readme": "README.md",
+  "repository": "https://github.com/i5ting/gulp",
+  "license": "MIT",
   "deps": {
     "moonbitlang/async": "0.19.0",
     "i5ting/glob-watcher": "0.1.0",
